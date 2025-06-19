@@ -5,10 +5,10 @@ import axios from 'axios'
 import { Input } from '@/components/ui/input'
 import { toast } from 'sonner'
 import debounce from 'lodash.debounce'
- type Category = {
-    id:string,
-    name:string
- }
+type Category = {
+  id: string,
+  name: string
+}
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([])
   const [search, setSearch] = useState('')
@@ -55,6 +55,21 @@ export default function CategoriesPage() {
           ))}
         </ul>
       )}
+      <div className="flex gap-2">
+        <button
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+          className="px-3 py-1 border rounded disabled:opacity-50"
+        >
+          Sebelumnya
+        </button>
+        <button
+          onClick={() => setPage((prev) => prev + 1)}
+          className="px-3 py-1 border rounded"
+        >
+          Selanjutnya
+        </button>
+      </div>
     </div>
   )
 }
