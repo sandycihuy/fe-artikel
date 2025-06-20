@@ -1,63 +1,61 @@
 'use client'
 
-import { useEffect, useState } from "react"
-import axios from 'axios'
-import debounce from 'lodash.debounce'
+import { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { toast } from 'sonner'
+import debounce from 'lodash.debounce'
 
 type Article = {
-  id: string,
+  id: string
   title: string
 }
 
+const mockData = [
+  {
+    id: '1',
+    title: 'Artikel Satu'
+  },
+  {
+    id: '2',
+    title: 'Artikel Dua'
+  },
+  {
+    id: '3',
+    title: 'Artikel Tiga'
+  }
+]
+
 export default function ArticleList() {
   const [articles, setArticles] = useState<Article[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
   const [search, setSearch] = useState('')
-  const [page, setPage] = useState(1)
 
-  const fetchArticles = async () => {
-    setLoading(true)
-    try {
-      const resp = await axios.get(`/api/articles`, {
-        params: { q: search, page, limit: 9 }
-      })
-      setArticles(resp.data.data)
-    } catch {
-      setError('gagal memuat artikel')
-      toast.error('gagal memuat artikel')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const debouncedSearch = debounce((val: string) => {
-    setSearch(val)
-    setPage(1)
-  }, 400)
+  const debouncedSearch = debounce((value: string) => {
+    const filtered = mockData.filter((item) =>
+      item.title.toLowerCase().includes(value.toLowerCase())
+    )
+    setArticles(filtered)
+  }, 300)
 
   useEffect(() => {
-    fetchArticles()
-  }, [search, page])
+    setArticles(mockData)
+  }, [])
 
   return (
     <div className="space-y-4">
-      <Input placeholder="cari artikel..." onChange={(e) => debouncedSearch(e.target.value)} />
-      {loading ? (
-        <p>loading</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : articles.length === 0 ? (
-        <p>tidak ditemukan artikel</p>
-      ) : (
-        <ul className="grid md:grid-cols-3 gap-4">
-          {articles.map((article) => (
-            <li key={article.id}>{article.title}</li>
-          ))}
-        </ul>
-      )}
+      <Input
+        placeholder="Cari artikel..."
+        onChange={(e) => debouncedSearch(e.target.value)}
+      />
+
+      <ul className="grid md:grid-cols-2 gap-4">
+        {articles.map((article) => (
+          <li
+            key={article.id}
+            className="border p-4 rounded shadow-sm bg-white"
+          >
+            {article.title}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
