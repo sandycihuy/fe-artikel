@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-
+import { useRouter } from 'next/navigation'
 const schema = z.object({
   username: z.string().min(1),
   password: z.string().min(1),
@@ -14,6 +14,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export default function LoginForm() {
+    const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -23,7 +24,9 @@ export default function LoginForm() {
 
   const onSubmit = (data: FormData) => {
     console.log(' coba login :', data)
+        router.push('/articles')
     alert('Berhasil submit')
+
   }
 
   return (
