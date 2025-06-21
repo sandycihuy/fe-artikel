@@ -1,13 +1,13 @@
 import { LoginResponse, Role } from '@/types/auth';
-import { toDisplayRole } from '@/lib/utils';
+// import { toDisplayRole } from '@/lib/utils';
 
 export function mockLoginResponse(role: Role): LoginResponse {
   return {
-    token: `mocked-jwt-token-${role}`,
+    token: 'mock-token',
     user: {
-      id: role === 'admin' ? 1 : 2,
+      id: 1,
       username: role === 'admin' ? 'adminuser' : 'dummyuser',
-      role: toDisplayRole(role), 
+      role: role === 'admin' ? 'Admin' : 'User',
     },
   };
 }
