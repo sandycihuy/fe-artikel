@@ -1,4 +1,4 @@
-import {LoginData,RegisterData,Role,LoginResponse} from '@/types/auth';
+import {LoginData,RegisterData,Role,LoginResponse,RegisterResponse} from '@/types/auth';
 import { isMockEnabled } from '@/lib/isMockEnabled';
 import { mockLoginResponse } from '@/mock/login';
 
@@ -30,7 +30,7 @@ export async function loginUser(data: LoginData): Promise<LoginResponse> {
   return res.json();
 }
 
-export async function registerUser(data: RegisterData): Promise<any> {
+export async function registerUser(data: RegisterData): Promise<RegisterResponse> {
   if (isMockEnabled()) {
     const existingUsers = ['adminuser', 'dummyuser'];
 

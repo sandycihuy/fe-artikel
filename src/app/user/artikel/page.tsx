@@ -1,14 +1,28 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import ArticleList from './ArticleList'
 
-export default function Home() {
+export default function ArticlesPage() {
   const router = useRouter()
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    router.replace('/auth/login') // Redirect ke halaman login
+    const isLogin = document.cookie.includes('token=')
+    if (!isLogin) {
+      router.replace('/auth/login')
+    } else {
+      setIsReady(true)
+    }
   }, [router])
 
-  return null
+  if (!isReady) return null 
+
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Daftar Artikel</h1>
+      <ArticleList />
+    </div>
+  )
 }

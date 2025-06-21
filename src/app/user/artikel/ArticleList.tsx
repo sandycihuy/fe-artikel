@@ -26,7 +26,7 @@ const mockData = [
 
 export default function ArticleList() {
   const [articles, setArticles] = useState<Article[]>([])
-  const [search, setSearch] = useState('')
+  // const [search, setSearch] = useState('')
 
   const debouncedSearch = debounce((value: string) => {
     const filtered = mockData.filter((item) =>

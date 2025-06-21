@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+// import axios from 'axios'
+import api from '@/lib/axios'
 import { Input } from '@/components/ui/input'
 import { toast } from 'sonner'
 import debounce from 'lodash.debounce'
@@ -18,7 +19,7 @@ export default function CategoriesPage() {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const res = await axios.get('/api/categories', {
+      const res = await api.get('/api/categories', {
         params: { q: search, page, limit: 10 }
       })
       setCategories(res.data.data)
