@@ -9,7 +9,11 @@ export interface User {
 
 export interface LoginResponse {
   token: string;
-  user: User;
+  user:{
+    id:number,
+    username:string,
+    role: 'Admin' | 'User';
+  }
 }
 export interface RegisterResponse {
   message: string;
